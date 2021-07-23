@@ -5,8 +5,8 @@ import github from 'prism-react-renderer/themes/vsDark';
 
 export function CodeBlockWrapper({ children, ...rest } : { children: JSX.Element }) {
     return (
-        <Box mt={2} p={4} maxW={"100vw"} overflowX="scroll" rounded="md"
-             bg="rgb(42, 39, 52)" 
+        <Box mt={2} p={[2, 4]} maxW={"100vw"} overflowX="scroll" rounded="md"
+             bg="#1E1E1E" 
              {...rest}
         >{ children }</Box>
     )
