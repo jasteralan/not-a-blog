@@ -5,7 +5,7 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemoteSerializeResult } from 'next-mdx-remote'
 import matter from 'gray-matter'
 
-import { FrontMatter } from "./types";
+import { FrontMatter } from "../types";
 
 const ROOT_PATH = process.cwd();
 const POSTS_PATH = path.join(ROOT_PATH, 'posts');
@@ -19,8 +19,10 @@ type Dict = { [key:string]:string };
 function meta(frontMatter:Dict) : FrontMatter {
     return {
         title: frontMatter.title || '忘記寫 Title',
-        icon: svgIcon(frontMatter.icon || '💩')
-    }
+        icon: svgIcon(frontMatter.icon || '💩'),
+        published: !!frontMatter.published,
+        releasedAt: frontMatter.releasedAt
+    };
 }
 
 function parseSlug(filePath: string) {
@@ -39,3 +41,4 @@ export async function fetchPost(slug: string): Promise<[MDXRemoteSerializeResult
 
     return [mdxSource, meta(data)];
 }
+

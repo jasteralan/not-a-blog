@@ -1,14 +1,14 @@
 import Head from 'next/head';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
+import { MDXRemoteSerializeResult } from 'next-mdx-remote'
+import { Box, Heading, Text } from '@chakra-ui/react';
 
 import { FrontMatter } from 'types';
-import { fetchPost, fetchPostSlugs } from 'helpers';
+import { fetchPost, fetchPostSlugs } from 'helpers/mdx';
+import { daysAgoFmt } from 'helpers/helpers';
 
 import PostLayout from 'components/PostLayout';
 
-import CodeBlock, { CodeBlockWrapper } from 'components/CodeBlock';
-import Br from 'components/Br';
-import { Box, Heading, Text } from '@chakra-ui/react';
+import MDX from 'components/MDX';
 
 export default function Post({ source, frontMatter }: { 
     source: MDXRemoteSerializeResult,
@@ -22,18 +22,13 @@ export default function Post({ source, frontMatter }: {
             </Head>
             <PostLayout>
                 <Box as="header" mb={6}>
-                    <Text mb={8} fontSize="sm" color="gray.400">5 days ago</Text>
+                    <Text mb={8} fontSize="sm" color="gray.400">{ daysAgoFmt(frontMatter.releasedAt) }</Text>
                     <Heading as="h1" fontWeight="normal"
                             fontSize={["2xl", "3xl", "4xl"]}
                     >{ frontMatter.title }</Heading>
                 </Box>
 
-                <MDXRemote {...source}  components={{ 
-                    p: props => <Text pb={2} fontSize={["sm", "md", "lg"]} {...props} />,
-                    pre : CodeBlockWrapper,
-                    code: CodeBlock,
-                    Br 
-                }} />
+                <MDX source={source} />
             </PostLayout>
         </>
     )

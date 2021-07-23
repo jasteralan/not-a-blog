@@ -1,6 +1,6 @@
 import { Box, Grid, Heading, Text } from "@chakra-ui/react";
 
-function Post({ children }) {
+function Post({ children }: { children: JSX.Element[] }) {
     return (
         <Box as="article" 
             w="95vw" maxW="980px" mx="auto" 
@@ -14,7 +14,7 @@ function Post({ children }) {
     )
 }
 
-export default function PostLayout({ children }) {
+export default function PostLayout({ children }: { children: JSX.Element[] }) {
     return (
         <Grid minH="100vh" templateRows="auto 1fr auto"> 
             <Box as="header" borderBottom="1px">
@@ -27,9 +27,7 @@ export default function PostLayout({ children }) {
             </Box>
 
             <Box as="section">
-                <Post>
-                    { children }
-                </Post>
+                <Post>{ children }</Post>
             </Box>
 
             <Box as="footer" pt={4} pb={2}>
