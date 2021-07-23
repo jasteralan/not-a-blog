@@ -1,0 +1,16 @@
+---
+title: "把 Emoji 當作 Favicon"
+brief: "CSS Trick 看到的小技巧"
+icon: '📝'
+publish: true
+releasedAt: "2021-07-23"
+---
+
+以前在 [CSS Trick](https://css-tricks.com/emojis-as-favicons/) 看到，
+不想花心思弄 favicon 的時候可以擋一下 🙂
+
+Emoji 塞到 svg 語法就完成，支援度不確定。
+
+```js
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎉</text></svg>">
+```
