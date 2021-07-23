@@ -1,17 +1,15 @@
 ---
 title: "把 Emoji 當作 Favicon"
+icon: '📝'
 publish: true
 releasedAt: "2021-07-23"
 ---
 
-以前在 [CSS Trick](https://css-tricks.com/emojis-as-favicons/)看到，
-把 emoji 塞到 svg 語法就可以，支援度不確定。
+以前在 [CSS Trick](https://css-tricks.com/emojis-as-favicons/) 看到，
+不想花心思弄 favicon 的時候可以擋一下 🙂
 
-2020 的文章了，覺得蠻好用記錄一下
+Emoji 塞到 svg 語法就完成，支援度不確定。
 
-不想花心思弄 favicon 的時候可以擋一下 🙂<br/><br/>
-
-語法也蠻簡單：
-```
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💩</text></svg>">
+```js
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎉</text></svg>">
 ```
