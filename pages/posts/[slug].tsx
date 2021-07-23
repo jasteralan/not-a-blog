@@ -26,8 +26,6 @@ export default function Post({ source, frontMatter }: {
 
 export async function getStaticPaths() {
     const slugs = await fetchPostSlugs();
-
-    console.log("Is goning to build static pages:", slugs);
     
     return {
         paths: slugs.map((slug) => ({ params: { slug } })),
