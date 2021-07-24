@@ -1,8 +1,9 @@
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
-import { Link, LinkProps, Text, TextProps } from '@chakra-ui/react';
+import { Link, LinkProps, Text, TextProps, Code, CodeProps } from '@chakra-ui/react';
 
 import CodeBlock, { CodeBlockWrapper } from 'components/CodeBlock';
 import Br from 'components/Br';
+import { FunctionComponent } from 'react';
 
 function P({ children, ...props } : { 
     children: JSX.Element, 
@@ -18,14 +19,26 @@ function A({ children, ...props } : {
     return <Link color="blue.400" target="_blank" {...props}>{ children }</Link>
 }
 
-export default function MDX({ source }: { source: MDXRemoteSerializeResult }) {
+function InlineCode({ children, ...props }: {
+    children: JSX.Element, 
+    props : CodeProps 
+}) {
+    return <Code px="1" {...props}>{ children }</Code>
+}
+
+export default function MDX({ source, customComponents }: { 
+    source: MDXRemoteSerializeResult,
+    customComponents: { [k:string]: FunctionComponent }
+}) {
     return (
         <MDXRemote {...source}  components={{ 
             p: P,
             a: A,
             pre : CodeBlockWrapper,
             code: CodeBlock,
-            Br 
+            inlineCode: InlineCode,
+            Br,
+            ...customComponents 
         }} />
     )
 }

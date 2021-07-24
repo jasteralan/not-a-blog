@@ -1,0 +1,37 @@
+---
+title: "在 MDXRemote 中動態載入元件"
+icon: '🍙'
+publish: true
+releasedAt: "2021-07-24"
+customConponents: ['CustomComp']
+---
+
+用 `gray-matter` parse `customComponents`
+```
+---
+title: "..."
+releasedAt: "..."
+customConponents: ['CustomComp']
+---
+```
+
+<Br />
+
+在 `MDXRemote` 動態載入
+```js
+const components = frontMatter.customConponents.reduce((result, c) => {
+    result[c] = dynamic(() => import(`components/${c}`));
+
+    return result;
+}, {});
+
+export default function MDX({ source, customComponents }) {
+    return (
+        <MDXRemote {...source}  components={{ 
+            ...customComponents 
+        }} />
+    )
+}
+```
+
+<CustomComp />

@@ -1,13 +1,6 @@
 import { format, subDays } from "date-fns";
-import { fetchPostSlugs } from "../helpers/mdx";
-import { daysAgoFmt } from "../helpers/helpers";
 
-describe("fetchPostSlugs", () => {
-    it('read file names from posts folder', async () => {
-        const filenames = await fetchPostSlugs();
-        expect(filenames.length).toBeGreaterThan(0);
-    });
-});
+import { daysAgoFmt } from "../helpers/helpers";
 
 describe("daysAgoFmt", () => {
     it("Get '3 days ago'", () => {
