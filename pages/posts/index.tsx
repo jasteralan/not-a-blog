@@ -43,7 +43,7 @@ function Title({ children, ...rest }) {
 function PostList({ list }: { list: PostListItem[] }) {
     return (
         <Box px={[0, 4]} ml={-2}>
-            <Title>最近ㄉ文章</Title>
+            <Title>最近ㄟ文章</Title>
             <VStack pl={2} spacing={8}>
                 { list.map(item => (<PostItem  key={item.slug} item={item} /> ))}
             </VStack>
