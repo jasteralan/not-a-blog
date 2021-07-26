@@ -1,0 +1,95 @@
+---
+title: "Instagram API"
+brief: "記錄一下怎麼拿到 Instgram 上的照片"
+icon: '📷'
+publish: true
+releasedAt: "2021-07-25"
+---
+
+## [Instagram 基本顯示 API](https://developers.facebook.com/docs/instagram-basic-display-api)
+
+
+1. 瀏覽器上連到
+```shell
+https://api.instagram.com/oauth/authorize
+  ?client_id={CLIENT_ID}
+  &redirect_uri={REDIRECT_URI}
+  &scope=user_profile,user_media
+  &response_type=code
+```
+
+<Br />
+
+2. 出現授權要求，同意後會導到 `REDIRECT_URI?code={CODE}`
+
+授權碼屬於短期代碼，有效時間僅 1 小時
+
+<Br />
+
+3. 拿 `code` 換 `token`
+```
+curl -X POST https://api.instagram.com/oauth/access_token \ 
+  -F client_id={CLIENT_ID} \ 
+  -F client_secret={CLIENT_SECRET} \ 
+  -F grant_type=authorization_code \ 
+  -F redirect_uri={REDIRECT_URI} \ 
+  -F code={CODE}
+
+// Response
+{
+    "access_token": "...", 
+    "user_id": ...
+}
+```
+
+<Br />
+
+4. 拿上面的 `user_id` 和 `access_token` 來用
+```
+curl -X GET \ 
+'https://graph.instagram.com/{user_id}?fields=id,media_type,media_url,username,timestamp＆access_token={access_token}'
+
+
+// Response 資料格式
+{
+    data: {
+        id: string, // image id
+        caption: string
+    }[],
+    paging: {
+        "cursors": { "before": string, "after": string },
+        "next": string // graph url 
+    }
+}
+```
+
+<Br />
+
+5. `paging.next` 取得下一批資料
+```
+curl -X GET {paging.next}
+```
+
+<Br />
+
+6. `data.id` 取得每一張圖的資料
+```
+curl -X GET \
+'https://graph.instagram.com/{id}?fields=id,media_type,media_url,username,timestamp&access_token={access_token}'
+
+{
+    "id": string, // image id
+    "media_type": "IMAGE",
+    "media_url": string, // image url
+    "username": string,
+    "timestamp": string // YYYY-MM-DDTHH:mm:ss+0000
+}
+```
+
+<Br />
+
+還不確定怎麼背景執行，總之留點記錄
+
+感覺是不想讓使用者太方便取得所有圖片，整體操作相當麻煩，
+[Instagram 圖形 API](https://developers.facebook.com/docs/instagram-api)只有讓專業帳號用，
+說不定就能夠批次取得圖片網址（吧
