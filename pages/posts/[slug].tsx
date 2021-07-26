@@ -1,26 +1,39 @@
-import Head from 'next/head';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
+import dynamic from 'next/dynamic'; 
 
-import { FrontMatter } from '../../types';
-import { fetchPost, fetchPostSlugs } from '../../helpers'
+import { MDXRemoteSerializeResult } from 'next-mdx-remote'
+import { Box, Heading, Text } from '@chakra-ui/react';
 
-export default function Post({ source, frontMatter }: { 
+import { FrontMatter } from 'types';
+import { fetchPost, fetchPostSlugs } from 'helpers/mdx';
+import { daysAgoFmt } from 'helpers/helpers';
+
+import PostLayout, { Post } from 'components/PostLayout';
+import MDX from 'components/MDX';
+
+export default function PostPage({ source, frontMatter }: { 
     source: MDXRemoteSerializeResult,
     frontMatter: FrontMatter
 }) {
-    return (
-        <div className="wrapper">
-            <Head>
-                <title>{ frontMatter.title }</title>
-                {
-                    frontMatter.icon && 
-                    <link rel="icon" href={frontMatter.icon}></link>
-                }
-            </Head>
+    const components = frontMatter.customConponents.reduce((result, c) => {
+        result[c] = dynamic(() => import(`components/posts/${c}`));
 
-            <h1>{frontMatter.title}</h1>
-            <MDXRemote {...source}  />
-        </div>
+        return result;
+    }, {});
+
+    return (
+        <PostLayout title={frontMatter.title} icon={frontMatter.icon}>
+            <Post>
+                <Box as="header" mb={6}>
+                    <Text mb={8} fontSize="sm" color="gray.400">{ daysAgoFmt(frontMatter.releasedAt) }</Text>
+                    <Heading as="h1" 
+                            fontWeight="normal" 
+                            fontSize={["2xl", "3xl", "4xl"]}
+                    >{ frontMatter.title }</Heading>
+                </Box>
+
+                <MDX source={source} customComponents={components} />
+            </Post>
+        </PostLayout>
     )
 }
 
@@ -38,3 +51,8 @@ export async function getStaticProps({ params } : { params : { slug: string }}) 
 
     return { props: { source, frontMatter } };
 }
+
+// export async function getServerSideProps({ params }) {
+//     const [source, frontMatter] = await fetchPost(params.slug);
+//     return { props: { source, frontMatter } };
+// }
