@@ -21,7 +21,7 @@ function PostItem({ item }: { item: PostListItem }) {
              onClick={() => router.push(`/posts/${item.slug}`)}
         >
             <AspectRatio ratio={[1.33, 0.75]}>
-                <Image objectFit="cover" src="/images/polygon.webp" />
+                <Image objectFit="cover" src="/images/polygon.webp" alt="Post Cover" />
             </AspectRatio>
             <Box p={8}>
                 <Text mb={4} fontSize="sm" color="gray.500">{ item.daysAgo }</Text>
