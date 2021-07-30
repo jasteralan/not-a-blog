@@ -1,5 +1,5 @@
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
-import { Link, LinkProps, Text, TextProps, Code, CodeProps } from '@chakra-ui/react';
+import { Link, LinkProps, Text, TextProps, Code, CodeProps, Heading, HeadingProps } from '@chakra-ui/react';
 
 import CodeBlock, { CodeBlockWrapper } from 'components/CodeBlock';
 import Br from 'components/Br';
@@ -23,7 +23,17 @@ function InlineCode({ children, ...props }: {
     children: JSX.Element, 
     props : CodeProps 
 }) {
-    return <Code px="1" {...props}>{ children }</Code>
+    return <Code mx={-1} fontSize="inherit" transform="scale(0.9)" {...props}>{ children }</Code>
+}
+
+function H2({ children, ...props }: {
+    children: JSX.Element, 
+    props : HeadingProps 
+}) {
+    return <Heading as="h2" mb={2} fontWeight="500" 
+                            fontSize={["xl"]}
+    
+    {...props}>{ children }</Heading>
 }
 
 export default function MDX({ source, customComponents }: { 
@@ -32,6 +42,7 @@ export default function MDX({ source, customComponents }: {
 }) {
     return (
         <MDXRemote {...source}  components={{ 
+            h2: H2,
             p: P,
             a: A,
             pre : CodeBlockWrapper,
