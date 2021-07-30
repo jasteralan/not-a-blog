@@ -1,17 +1,21 @@
-import { FiLinkedin, FiMail, FiMapPin, FiPhone } from "react-icons/fi";
+import { FiLinkedin, FiMail, FiMapPin, FiPhone, FiGithub } from "react-icons/fi";
+
+const commonContact = [
+    { icon: FiMail, text: 'jaster1019@gmail.com' },
+    { icon: FiGithub, text: '/jasteralan', link: 'https://github.com/jasteralan' },
+    { icon: FiLinkedin, text: '/jaster-chang-24250590', link: 'https://www.linkedin.com/in/jaster-chang-24250590/' }
+];
 
 const contact = {
     zhHant : [
         { icon: FiMapPin, text: '台灣，台北' },
         { icon: FiPhone, text: '0921-240064' },
-        { icon: FiMail, text: 'jaster1019@gmail.com' },
-        { icon: FiLinkedin, text: '/jaster-chang-24250590' }
+        ...commonContact,
     ],
     en : [
         { icon: FiMapPin, text: 'Taiwan, Taipei' },
-        { icon: FiPhone, text: '(+886) 921-240064' },
-        { icon: FiMail, text: 'jaster1019@gmail.com' },
-        { icon: FiLinkedin, text: '/jaster-chang-24250590' }
+        { icon: FiPhone, text: '(+886) 921-240064' },   
+        ...commonContact
     ],
 }
 

@@ -1,0 +1,35 @@
+---
+title: "Input onChange 的中日文 IME 觸發 Issue"
+brief: "React 的 input 在中日文 IME 輸入時，onChange 會多次觸發，可以用 onCompositionStart 來處理"
+icon: '🐞'
+publish: true
+releasedAt: "2021-07-29"
+customConponents: ['InputIMEIssue']
+---
+
+`input`用`onChange`處理邏輯時，中日文輸入會有個問題：
+
+比方注音輸入法的時候打：`ㄌ一ㄣˊ`=>`林`，`onChange`可能觸發四次以上，但只有最後一次的事件是想要的。
+
+[Issue 8683](https://github.com/facebook/react/issues/8683) 講得得蠻清楚的，算是蠻久的 Issue，但找不到比較新的提問或建議處理方式。 
+對於 [Uncontrolled Component](https://zh-hant.reactjs.org/docs/uncontrolled-components.html)，可以搭配`onCompositionStart`等事件處理。
+
+<Br/>
+
+## 一般使用`onChange`事件
+
+輸入中文的時候，背景顏色會隨每一次輸入變換
+
+<InputIMEIssue type="before" />
+
+<Br/>
+
+## 搭配`onCompositionStart`等事件
+
+寫個 [Custom Hook](https://gist.github.com/jasteralan/85354d7efc43e1568a2ff15d7842e019) 來處理，現在只有在最後確認輸入的時候才會觸發事件
+
+<InputIMEIssue type="solved" />
+
+<Br/>
+
+[Uncontrolled Component](https://zh-hant.reactjs.org/docs/uncontrolled-components.html) 還沒找到比較好的解，以後看到再補上

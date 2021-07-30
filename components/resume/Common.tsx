@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Icon, List, ListIcon, ListItem, Tag, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Icon, Link, List, ListIcon, ListItem, Tag, Text } from "@chakra-ui/react";
 import { FiFeather, FiLinkedin, FiMail, FiMapPin, FiPhone } from "react-icons/fi";
 
 export const pointColor = "#f1c00e";
@@ -156,12 +156,12 @@ export function Experience({ title, jobs }: {
     )
 }
 
-function ContactInfo({ children, icon: Icon }) {
+function ContactInfo({ children, link, icon: Icon }) {
     return (
         <ListItem>
             <Flex justify="space-between" align="center">
                 <Text textAlign="right" pr={8} flexGrow={1}>{ children }</Text>
-                <Icon />
+                <Link target="_blank" href={link || ''}><Icon /></Link>
             </Flex>
         </ListItem>
     )
@@ -172,13 +172,13 @@ export function Contact({ contact }) {
         <Box position="absolute" w="300px" right={10} top={0}>
             <List position="relative" zIndex="2"
                   fontSize={"sm"} pt={8} spacing={2}>
-                {contact.map(({ icon: Icon, text }, i) => (
-                    <ContactInfo key={i} icon={Icon}>{ text }</ContactInfo>
+                {contact.map(({ icon: Icon, text, link }, i) => (
+                    <ContactInfo key={i} icon={Icon} link={link}>{ text }</ContactInfo>
                 ))}
             </List>
 
             <Box position="absolute" right="-13px" top="-40px" zIndex="1" rounded="full"
-                 w={"40px"} height={"200px"} 
+                 w={"40px"} height={"230px"} 
                  bg={"rgb(255, 220, 86)"}
             />
         </Box>
