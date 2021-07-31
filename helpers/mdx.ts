@@ -59,3 +59,23 @@ export async function fetchPostList(): Promise<PostListItem[]>{
 
     return list;
 }
+
+interface RawItem {
+    slug: string,
+    title: string,
+    brief: string,
+    published: boolean,
+    releasedAt: string
+}
+
+export async function fetchPostListRaw(): Promise<RawItem[]>{
+    const slugs = await fetchPostSlugs();
+    const list = await Promise.all(slugs.map(async slug => {
+        const source = fs.readFileSync(path.join(POSTS_PATH, `${slug}.mdx`), "utf8");
+        const { data } = matter(source);
+
+        return { slug, ...data };
+    }));
+
+    return list;
+}
