@@ -3,10 +3,11 @@ import { Box, Grid, Heading, Text, VStack, Image, AspectRatio } from "@chakra-ui
 
 import { PostListItem } from "types";
 
-import { svgIcon } from "helpers/helpers";
+import { daysAgoFmt, svgIcon } from "helpers/helpers";
 import { fetchPostList } from "helpers/mdx";
 
 import PostLayout from "components/PostLayout";
+import prisma from "helpers/prisma";
 
 function PostItem({ item }: { item: PostListItem }) {
     const router = useRouter();
@@ -80,7 +81,17 @@ export default function Posts({ list }: { list: PostListItem[] }) {
 }
 
 export async function getStaticProps() {
-    const list = await fetchPostList();
+    const posts = await (await prisma.post.findMany({ 
+        where: { published: true },
+        orderBy: { id: 'desc' }
+    }));
+    
+    const list = posts.map(({ createdAt, updatedAt, ...rest }) => ({
+        ...rest,
+        daysAgo: daysAgoFmt(rest.publishedAt)
+    }))
+
+    // const list = await fetchPostList();
 
     return { props: { list } };
 }
