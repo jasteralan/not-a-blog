@@ -1,3 +1,10 @@
+# 履歷網站 2021 
+
+
+![cap2021](https://github.com/jasteralan/not-a-blog/assets/3198339/00593752-df0a-4074-b320-822ba07a46a7)
+
+---
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
